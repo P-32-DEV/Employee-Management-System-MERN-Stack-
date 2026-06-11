@@ -4,7 +4,11 @@ import EmployeeTable from './components/EmployeeTable';
 import EmployeeFormModal from './components/EmployeeFormModal';
 
 // Set API URL from environment variable or default to localhost
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/employees';
+// Ensure API URL always points to the /api/employees endpoint
+const RAW_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/employees';
+const API_URL = RAW_API_URL.endsWith('/api/employees')
+  ? RAW_API_URL
+  : RAW_API_URL.replace(/\/$/, '') + '/api/employees';
 
 function App() {
   const [employees, setEmployees] = useState([]);
@@ -58,6 +62,10 @@ function App() {
         throw new Error('Failed to fetch employee database.');
       }
       const data = await response.json();
+      // Guard against non-array responses (e.g. error objects from the server)
+      if (!Array.isArray(data)) {
+        throw new Error(data?.message || 'Unexpected response from server.');
+      }
       setEmployees(data);
     } catch (err) {
       console.error(err);
