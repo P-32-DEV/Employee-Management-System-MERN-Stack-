@@ -91,7 +91,7 @@ function App() {
     try {
       let response;
       let successMessage = '';
-      
+
       if (editingEmployee) {
         // UPDATE
         response = await fetch(`${API_URL}/${editingEmployee._id}`, {
@@ -131,7 +131,7 @@ function App() {
     if (!window.confirm('Are you sure you want to delete this employee record?')) {
       return;
     }
-    
+
     try {
       const response = await fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
@@ -155,15 +155,14 @@ function App() {
 
   return (
     <div className="min-h-screen pb-16 px-4 md:px-8">
-      
+
       {/* Toast Notification */}
       {toast && (
         <div className="fixed bottom-5 right-5 z-50 animate-bounce-short">
-          <div className={`flex items-center gap-3 px-5 py-3.5 rounded-xl border shadow-xl backdrop-blur-md transition-all duration-300 ${
-            toast.type === 'success' 
-              ? 'bg-emerald-950/90 text-emerald-300 border-emerald-500/30' 
+          <div className={`flex items-center gap-3 px-5 py-3.5 rounded-xl border shadow-xl backdrop-blur-md transition-all duration-300 ${toast.type === 'success'
+              ? 'bg-emerald-950/90 text-emerald-300 border-emerald-500/30'
               : 'bg-rose-950/90 text-rose-300 border-rose-500/30'
-          }`}>
+            }`}>
             {toast.type === 'success' ? (
               <Sparkles className="w-5 h-5 text-emerald-400" />
             ) : (
@@ -176,7 +175,7 @@ function App() {
 
       {/* Main Container */}
       <div className="max-w-5xl mx-auto pt-10">
-        
+
         {/* Navigation / Header */}
         <header className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-800/60">
           <div className="flex items-center gap-3">
@@ -197,13 +196,12 @@ function App() {
           {/* Connection Status Indicator */}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-900/60 border border-slate-800 rounded-xl text-xs text-slate-400">
-              <span className={`w-2.5 h-2.5 rounded-full ${
-                serverStatus === 'online' ? 'bg-emerald-500 animate-pulse' :
-                serverStatus === 'offline' ? 'bg-rose-500' : 'bg-amber-500 animate-pulse'
-              }`} />
+              <span className={`w-2.5 h-2.5 rounded-full ${serverStatus === 'online' ? 'bg-emerald-500 animate-pulse' :
+                  serverStatus === 'offline' ? 'bg-rose-500' : 'bg-amber-500 animate-pulse'
+                }`} />
               Server: {serverStatus === 'online' ? 'Connected' : serverStatus === 'offline' ? 'Disconnected' : 'Connecting...'}
             </div>
-            
+
             <button
               onClick={fetchEmployees}
               title="Refresh Database"
@@ -274,7 +272,7 @@ function App() {
             <div>
               <p className="font-semibold">Database Error</p>
               <p className="text-xs text-rose-400/80 mt-1">{error}</p>
-              <button 
+              <button
                 onClick={fetchEmployees}
                 className="mt-3 px-3 py-1 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-medium rounded-lg text-xs transition-colors"
               >
@@ -285,7 +283,7 @@ function App() {
         )}
 
         {/* Main Employee Database Table */}
-        <EmployeeTable 
+        <EmployeeTable
           employees={employees}
           isLoading={isLoading}
           onEdit={handleOpenEditModal}
@@ -293,7 +291,7 @@ function App() {
         />
 
         {/* Create / Edit Form Modal Overlay */}
-        <EmployeeFormModal 
+        <EmployeeFormModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSubmit={handleFormSubmit}
